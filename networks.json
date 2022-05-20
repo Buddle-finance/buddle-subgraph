@@ -1,0 +1,29 @@
+{
+  "optimism-kovan": {
+    "BuddleSrc": {
+      "address": "0xc77852B84CD99Fab93a5199928172c988335568C"
+    },
+    "BuddleDest": {
+      "address": "0x230e86922D90F2416239C891938DdD0078769DaF"
+    }
+  },
+  "arbitrum-rinkeby": {
+    "BuddleSrc": {
+      "address": "0xc77852B84CD99Fab93a5199928172c988335568C"
+    },
+    "BuddleDest": {
+      "address": "0x230e86922D90F2416239C891938DdD0078769DaF"
+    }
+  },
+  "kovan": {
+    "BuddleSrc": {
+      "address": "0xc77852B84CD99Fab93a5199928172c988335568C"
+    },
+    "BuddleDest": {
+      "address": "0x230e86922D90F2416239C891938DdD0078769DaF",
+    },
+    "BuddleBridge": {
+      "address": "0x230e86922D90F2416239C891938DdD0078769DaF"
+    }
+  }
+}

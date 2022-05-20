@@ -1,0 +1,63 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: BuddleSource
+    network: optimism-kovan
+    source:
+      address: "0xc77852B84CD99Fab93a5199928172c988335568C"
+      abi: BuddleSrc
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - OwnershipTransferred
+        - TicketConfirmed
+        - TicketCreated
+        - TransferStarted
+      abis:
+        - name: BuddleSrc
+          file: ./abis/BuddleSrc.json
+      eventHandlers:
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: TicketConfirmed(bytes32,bytes32)
+          handler: handleTicketConfirmed
+        - event: TicketCreated(bytes32,uint256,address[],uint256[],uint256[],uint256,uint256,bytes32)
+          handler: handleTicketCreated
+        - event: TransferStarted((address,address,uint256,uint256,uint256,uint256,uint256),uint256,bytes32,uint256)
+          handler: handleTransferStarted
+      file: ./src/buddle-src.ts
+  - kind: ethereum
+    name: BuddleDestination
+    network: optimism-kovan
+    source:
+      address: "0x53fF9D8D8416497fbe1B352F509f072b276489A9"
+      abi: BuddleDest
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - LiquidityOwnerChanged
+        - OwnershipTransferred
+        - RootApproved
+        - TransferCompleted
+        - WithdrawalEvent
+      abis:
+        - name: BuddleDest
+          file: ./abis/BuddleDest.json
+      eventHandlers:
+        - event: LiquidityOwnerChanged(uint256,uint256,address,address)
+          handler: handleLiquidityOwnerChanged
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: RootApproved(uint256,bytes32)
+          handler: handleRootApproved
+        - event: TransferCompleted((address,address,uint256,uint256,uint256,uint256,uint256),uint256,uint256,address)
+          handler: handleTransferCompleted
+        - event: WithdrawalEvent((address,address,uint256,uint256,uint256,uint256,uint256),uint256,uint256,address)
+          handler: handleWithdrawalEvent
+      file: ./src/buddle-dest.ts

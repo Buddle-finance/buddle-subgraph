@@ -1,0 +1,63 @@
+type Transfer @entity {
+  id: ID!
+  transferId: BigInt!
+  node: Bytes
+  srcChain: BigInt!
+  liquidityProvider: Bytes
+  liquidityWithdrawn: Boolean!
+  "false for TransferInitiated and true for TransferCompleted"
+  completed: Boolean!
+  transferData: TransferData! @derivedFrom(field: "transfer")
+}
+
+type TransferData @entity(immutable: true) {
+  id: ID!
+  tokenAddress: Bytes!
+  destination: Bytes!
+  amount: BigInt!
+  fee: BigInt!
+  startTime: BigInt!
+  feeRampup: BigInt!
+  chain: BigInt!
+  transfer: Transfer!
+}
+
+type Ticket @entity {
+  id: ID!
+  confirmed: Boolean!
+  ticket: Bytes!
+  destChain: BigInt!
+  ticketTokens: [TicketToken!]! @derivedFrom(field: "ticket")
+  firstId: BigInt!
+  lastId: BigInt!
+  stateRoot: Bytes!
+}
+
+type TicketToken @entity (immutable: true) {
+  id: ID!
+  token: Bytes!
+  amount: BigInt!
+  bounty: BigInt!
+  ticket: Ticket!
+}
+
+type TicketTransfer @entity {
+  id: ID!
+  ticket: Ticket!
+  timestamp: BigInt!
+}
+
+type ApprovedRoot @entity (immutable: true) {
+  id: ID!
+  time: BigInt!
+  srcChain: BigInt!
+  stateRoot: Bytes!
+}
+
+type ContractOwner @entity (immutable: true) {
+  id: ID!
+  contract: Bytes!
+  owner: Bytes!
+  time: BigInt!
+  block: BigInt!
+}

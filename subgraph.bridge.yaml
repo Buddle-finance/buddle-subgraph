@@ -1,0 +1,26 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: BuddleBridge
+    network: kovan
+    source:
+      address: "0xC5Fd44b72B4Bd21Bf26350a746b9bF90C590400b"
+      abi: BuddleBridge
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - FundsBridged
+        - OwnershipTransferred
+      abis:
+        - name: BuddleBridge
+          file: ./abis/BuddleBridge.json
+      eventHandlers:
+        - event: FundsBridged(uint256,address[],uint256[],uint256,bytes32)
+          handler: handleFundsBridged
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+      file: ./src/buddle-bridge.ts
